@@ -51,10 +51,10 @@
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+  Each of the nodes in S have been finalized, which means that their minimum distances have already been found. Because every other possible value must be larger than the minimum, the algorithm cannot find any smaller value. 
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+  Each of the nodes not in S are processed from a finalized node, 
 
 ### Part 3b: Why Each Phase Holds
 
