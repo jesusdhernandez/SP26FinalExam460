@@ -21,10 +21,10 @@
 
 ### Part 2a: Source Selection
 
-| Source Node Type  | Why it is a source                                                                                          |
-| ----------------- | ----------------------------------------------------------------------------------------------------- |
-| S (start)         | This is where we start from, it is the definition                                                           |
-| M Once we visit relic chambers, we have to continue the path, so this is also a source to continue from ource   ource   ource   |
+| Source Node Type  | Why it is a source                                                                                     |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| S (start)         | This is where we start from, it is the definition of a source                                          |
+| M (relic chamber) | Once we visit a relic chamber, we have to continue the path, so this is also a source to continue from |
 
 ### Part 2b: Distance Storage
 
