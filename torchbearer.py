@@ -1,9 +1,9 @@
 """
-CS 460 – Algorithms: Final Programming Assignment
+CS 460 - Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Jesus Hernandez
+Student ID:   131481477
 
 INSTRUCTIONS
 ------------
@@ -31,10 +31,10 @@ def explain_problem():
     str
         Your Part 1 README answers, written as a string.
         Must match what you wrote in README Part 1.
-
-    TODO
     """
-    return "TODO"
+    return """A single shortest-path run from S is not enough because we must also visit each M (relic chambers) on the way to T. 
+  After all inter-location costs are known, we must still decide which path to take to get to each M and then to T.
+  This requires a search over orders because we don't know which M to visit first."""
 
 
 # =============================================================================

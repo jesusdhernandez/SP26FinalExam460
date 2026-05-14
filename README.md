@@ -1,70 +1,49 @@
 # The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Jesus Hernandez
+**Student ID:** 131481477
 **Course:** CS 460 – Algorithms | Spring 2026
 
-> This README is your project documentation. Write it the way a developer would document
-> their design decisions , bullet points, brief justifications, and concrete examples where
-> required. You are not writing an essay. You are explaining what you built and why you built
-> it that way. Delete all blockquotes like this one before submitting.
-
 ---
-
 ## Part 1: Problem Analysis
 
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
-
 - **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+  A single shortest-path run from S is not enough because we must also visit each M (relic chambers) on the way to T. 
 
 - **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+  After all inter-location costs are known, we must still decide which path to take to get to each M and then to T. 
 
 - **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+  This requires a search over orders because we don't know which relic chamber to visit first.
 
 ---
-
 ## Part 2: Precomputation Design
 
 ### Part 2a: Source Selection
 
-> List the source node types as a bullet list. For each, one-line reason.
-
-| Source Node Type | Why it is a source |
-|---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| Source Node Type  | Why it is a source                                                                                          |
+| ----------------- | ----------------------------------------------------------------------------------------------------- |
+| S (start)         | This is where we start from, it is the definition                                                           |
+| M Once we visit relic chambers, we have to continue the path, so this is also a source to continue from ource   ource   ource   |
 
 ### Part 2b: Distance Storage
 
-> Fill in the table. No prose required.
-
-| Property | Your answer |
-|---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Property                  | Your answer                                                                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Data structure name       | Nested hashmap (nested dictionary in Python?                                                                                                           |
+| What the keys represent   | Start and Target nodes, e.g. S and T = `['S']['T']`, respectively                                                                                      |
+| What the values represent | Since there's only one shortest distance needed to be kept between each pair of nodes, no conflicts should exist in the hashmaps, thus keeping it O(1) |
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** k + 1, where k = |M|
+- **Cost per run:** O(m log n)
+- **Total complexity:** O(k m log n)
+- **Justification (one line):** It is ran k + 1 times, but simplifying for big O drops the +1.
 
 ---
 
 ## Part 3: Algorithm Correctness
-
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
 
 ### Part 3a: What the Invariant Means
 
