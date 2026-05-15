@@ -25,13 +25,6 @@ import heapq
 # =============================================================================
 
 def explain_problem():
-    """
-    Returns
-    -------
-    str
-        Your Part 1 README answers, written as a string.
-        Must match what you wrote in README Part 1.
-    """
     return """A single shortest-path run from S is not enough because we must also visit each M (relic chambers) on the way to T. 
   After all inter-location costs are known, we must still decide which path to take to get to each M and then to T.
   This requires a search over orders because we don't know which M to visit first."""
@@ -103,16 +96,12 @@ def precompute_distances(graph, spawn, relics, exit_node):
 # =============================================================================
 
 def dijkstra_invariant_check():
-    """
-    Returns
-    -------
-    str
-        Your Part 3 README answers, written as a string.
-        Must match what you wrote in README Part 3.
-
-    TODO
-    """
-    return "TODO"
+    return """Each of the nodes in S have been finalized, which means that their minimum distances have already been found. Because every other possible value must be larger than the minimum, the algorithm cannot find any smaller value.
+    Each of the nodes not in S are processed from a finalized node, which means that finding the minimum distance to a non-finalized node from the finalized node is also the minimum distance overall, thus finalizing the node.
+    The invariant holds before iteration 1 because we haven't yet finalized nor looked at any node distances besides our source, and since the distance to the source from the source is always 0, the invariant holds.
+    Finalizing the min-dist node is always correct because since it is the minimum/shortest path, and all other weights are nonnegative, no other shorter path can possibly exist. 
+    The invariant guarantees that all distances to all nodes from the starting node are the minimum distances.
+    This matters for the route planner because the route must have the minimum cost getting from S to T, so having the minimum distances to each node is crucial for knowing which path to take."""
 
 
 # =============================================================================
@@ -120,16 +109,12 @@ def dijkstra_invariant_check():
 # =============================================================================
 
 def explain_search():
-    """
-    Returns
-    -------
-    str
-        Your Part 4 README answers, written as a string.
-        Must match what you wrote in README Part 4.
-
-    TODO
-    """
-    return "TODO"
+    return """The failure mode: Torchbearer either never finds the exit, or chooses a non-optimal path and wastes fuel.
+    Counter-example setup: S -> A -> B -> C -> D -> T with a distance of 1 each, while S -> E -> T with a distance of 2 each.
+    What greedy picks: S -> A -> B -> C -> D -> T
+    What optimal picks: S -> E -> T
+    Why greedy loses: Since each edge from S to A to T has a cost of 1, we have a total cost of 1 + 1 + 1 + 1 + 1 = 5, while S -> E -> T has a distance of 2 + 2 = 4. Thus, greedy has a higher cost than the optimal path.
+    The algorithm must explore the most optimal order of relic chambers to visit."""
 
 
 # =============================================================================

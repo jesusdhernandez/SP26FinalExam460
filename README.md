@@ -30,7 +30,7 @@
 
 | Property                  | Your answer                                                                                                                                            |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Data structure name       | Nested hashmap (nested dictionary in Python?                                                                                                           |
+| Data structure name       | Nested hashmap (nested dictionary in Python?)                                                                                                          |
 | What the keys represent   | Start and Target nodes, e.g. S and T = `['S']['T']`, respectively                                                                                      |
 | What the values represent | Since there's only one shortest distance needed to be kept between each pair of nodes, no conflicts should exist in the hashmaps, thus keeping it O(1) |
 
@@ -47,33 +47,26 @@
 
 ### Part 3a: What the Invariant Means
 
-> Two bullets: one for finalized nodes, one for non-finalized nodes.
-> Do not copy the invariant text from the spec.
-
 - **For nodes already finalized (in S):**
-  Each of the nodes in S have been finalized, which means that their minimum distances have already been found. Because every other possible value must be larger than the minimum, the algorithm cannot find any smaller value. 
+  Each of the nodes in S have been finalized, which means that their minimum distances have already been found. Because every other possible value must be larger than the minimum, the algorithm cannot find any smaller value.
 
 - **For nodes not yet finalized (not in S):**
-  Each of the nodes not in S are processed from a finalized node, 
+  Each of the nodes not in S are processed from a finalized node, which means that finding the minimum distance to a non-finalized node from the finalized node is also the minimum distance overall, thus finalizing the node.
 
 ### Part 3b: Why Each Phase Holds
 
-> One to two bullets per phase. Maintenance must mention nonnegative edge weights.
-
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+  The invariant holds before iteration 1 because we haven't yet finalized nor looked at any node distances besides our source, and since the distance to the source from the source is always 0, the invariant holds.
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+  Finalizing the min-dist node is always correct because since it is the minimum/shortest path, and all other weights are nonnegative, no other shorter path can possibly exist. 
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+  The invariant guarantees that all distances to all nodes from the starting node are the minimum distances.
 
 ### Part 3c: Why This Matters for the Route Planner
 
-> One sentence connecting correct distances to correct routing decisions.
-
-_Your answer here._
+This matters for the route planner because the route must have the minimum cost getting from S to T, so having the minimum distances to each node is crucial for knowing which path to take.
 
 ---
 
@@ -81,54 +74,39 @@ _Your answer here._
 
 ### Why Greedy Fails
 
-> State the failure mode. Then give a concrete counter-example using specific node names
-> or costs (you may use the illustration example from the spec). Three to five bullets.
-
-- **The failure mode:** _Your answer here._
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- **The failure mode:** Torchbearer either never finds the exit, or chooses a non-optimal path and wastes fuel.
+- **Counter-example setup:** S -> A -> B -> C -> D -> T with a distance of 1 each, while S -> E -> T with a distance of 2 each.
+- **What greedy picks:** S -> A -> B -> C -> D -> T
+- **What optimal picks:** S -> E -> T
+- **Why greedy loses:** Since each edge from S to A to T has a cost of 1, we have a total cost of 1 + 1 + 1 + 1 + 1 = 5, while S -> E -> T has a distance of 2 + 2 = 4. Thus, greedy has a higher cost than the optimal path.
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
-
-- _Your answer here._
+- The algorithm must explore the most optimal order of relic chambers to visit. 
 
 ---
-
 ## Part 5: State and Search Space
 
 ### Part 5a: State Representation
 
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
-
-| Component | Variable name in code | Data type | Description |
-|---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
-
+| Component                | Variable name in code | Data type | Description                                |
+| ------------------------ | --------------------- | --------- | ------------------------------------------ |
+| Current location         | curr                  | node      | The node the torchbearer is currently at   |
+| Relics already collected | visited               | list      | A list of already visited/collected relics |
+| Fuel cost so far         | cost                  | float     | A sum of fuel cost as a number             |
 ### Part 5b: Data Structure for Visited Relics
 
-> Fill in the table.
-
-| Property | Your answer |
-|---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
-
+| Property                                    | Your answer                                                                      |
+| ------------------------------------------- | -------------------------------------------------------------------------------- |
+| Data structure chosen                       | list                                                                             |
+| Operation: check if relic already collected | Time complexity: O(n)                                                            |
+| Operation: mark a relic as collected        | Time complexity: O(1)                                                            |
+| Operation: unmark a relic (backtrack)       | Time complexity: O(1)                                                            |
+| Why this structure fits                     | It fits because we're keeping a list of visited relics, without a specific order |
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- **Worst-case number of orders considered:** $k^2$
+- **Why:** For each M, we are comparing the distance to each M and exit, thus making it $|M|\times|M|=k\times k=k^2$
 
 ---
 
@@ -136,15 +114,11 @@ _Your answer here._
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
-
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- **What is tracked:** the shortest distance to each room, from each room.
+- **When it is used:** when determining the order of which chambers to visit
+- **What it allows the algorithm to skip:** non-optimal paths to each chamber, as well as paths to irrelevant rooms.
 
 ### Part 6b: Lower Bound Estimation
-
-> Three bullets.
 
 - **What information is available at the current state:** _Your answer here._
 - **What the lower bound accounts for:** _Your answer here._
@@ -162,4 +136,4 @@ _Your answer here._
 
 > Bullet list. If none beyond lecture notes, write that.
 
-- _Your references here._
+- None beyond lectures
