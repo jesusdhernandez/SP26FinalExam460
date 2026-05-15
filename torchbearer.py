@@ -50,7 +50,6 @@ def select_sources(spawn, relics, exit_node):
     """
     sources = set()
     sources.add(spawn)
-    sources.add(exit_node)
     for relic in relics:
         sources.add(relic)
     return list(sources)
