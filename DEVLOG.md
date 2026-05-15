@@ -15,14 +15,14 @@ I plan to test this by creating maps that have ideal pathing options, non-ideal 
 
 ## Entry 2 – [5/14/2026]: [Short description]
 
-> Required. At least one entry must describe a bug, wrong assumption, or design change
-> you encountered. Describe what went wrong and how you resolved it.
-
-_Your entry here._
+I've just completed the README and am about to start implementing the functions in Python. I think I have a good idea of how I want to design the program in details, e.g. how I will pathfind to each location. I am still a bit unsure as to how exactly I want to go about combining these with pruning and overall pathfinding.
 
 ---
 
 ## Entry 3 – [5/14/2026]: [Short description]
+
+> Required. At least one entry must describe a bug, wrong assumption, or design change
+> you encountered. Describe what went wrong and how you resolved it.
 
 _Your entry here._
 
