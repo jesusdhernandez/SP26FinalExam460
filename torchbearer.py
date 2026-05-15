@@ -47,9 +47,13 @@ def select_sources(spawn, relics, exit_node):
     list[node]
         No duplicates. Order does not matter.
 
-    TODO
     """
-    pass
+    sources = set()
+    sources.add(spawn)
+    sources.add(exit_node)
+    for relic in relics:
+        sources.add(relic)
+    return list(sources)
 
 
 def run_dijkstra(graph, source):
@@ -65,10 +69,20 @@ def run_dijkstra(graph, source):
     dict[node, float]
         Minimum cost from source to every node in graph.
         Unreachable nodes map to float('inf').
-
-    TODO
     """
-    pass
+    dist = {node: float('inf') for node in graph}
+    dist[source] = 0
+    pq = [(0, source)]
+    while pq:
+        current_dist, current_node = heapq.heappop(pq)
+        if current_dist > dist[current_node]:
+            continue
+        for neighbor, cost in graph[current_node]:
+            new_dist = current_dist + cost
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                heapq.heappush(pq, (new_dist, neighbor))
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -85,10 +99,12 @@ def precompute_distances(graph, spawn, relics, exit_node):
     dict[node, dict[node, float]]
         Nested structure supporting dist_table[u][v] lookups
         for every source u your design requires.
-
-    TODO
     """
-    pass
+    sources = select_sources(spawn, relics, exit_node)
+    dist_table = {}
+    for source in sources:
+        dist_table[source] = run_dijkstra(graph, source)
+    return dist_table
 
 
 # =============================================================================
@@ -138,10 +154,11 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
     tuple[float, list[node]]
         (minimum_fuel_cost, ordered_relic_list)
         Returns (float('inf'), []) if no valid route exists.
-
-    TODO
     """
-    pass
+    relics_remaining = set(relics)
+    best = [float('inf'), []]
+    _explore(dist_table, spawn, relics_remaining, [], 0, exit_node, best)
+    return best[0], best[1]
 
 
 def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
@@ -173,7 +190,24 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     explaining why it is safe (cannot skip the optimal solution).
     This comment is graded.
     """
-    pass
+    if not relics_remaining:
+        total_cost = cost_so_far + dist_table[current_loc][exit_node]
+        if total_cost < best[0]:
+            best[0] = total_cost
+            best[1] = relics_visited_order.copy()
+        return
+    
+    for relic in relics_remaining:
+        new_cost = cost_so_far + dist_table[current_loc][relic]
+        # If the cost so far + the cost to get to the next relic is greater than the current cheapest solution, we can prune this path because there is no cheaper solution.
+        if new_cost >= best[0]:
+            continue
+        relics_remaining.remove(relic)
+        relics_visited_order.append(relic)
+        _explore(dist_table, relic, relics_remaining, relics_visited_order, new_cost, exit_node, best)
+        relics_visited_order.pop()
+        relics_remaining.add(relic)
+
 
 
 # =============================================================================
@@ -197,7 +231,8 @@ def solve(graph, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    return find_optimal_route(dist_table, spawn, relics, exit_node)
 
 
 # =============================================================================
